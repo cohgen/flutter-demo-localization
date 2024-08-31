@@ -1,0 +1,10 @@
+{
+  "today": "Today is {{date, dd/MM/yyyy}}",
+  "helloMessage": "Hello {{name}} in the {{world, uppercase}} world",
+  "title": "Hello in English US",
+  "gender": {
+    "message": "They",
+    "message_female": "She",
+    "message_male": "He"
+  }
+}

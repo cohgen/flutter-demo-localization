@@ -1,0 +1,6 @@
+{
+  "clickMe": "Cliquez moi",
+  "clicked": "Tu as cliqué {{count}} fois!",
+  "clicked_plural": "Tu as cliqué {{count}} fois!",
+  "resetCounter": "Réinitialiser"
+}
