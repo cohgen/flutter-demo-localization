@@ -1,16 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:localization_demo/i18n.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({
-    super.key,
-    required this.supportedLocales,
-    required this.onUpdateLocale,
-  });
-
-  final List<Locale> supportedLocales;
-  final ValueChanged<Locale> onUpdateLocale;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -27,6 +22,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final t = context.t;
+    final localeModel = Provider.of<LocaleModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -45,10 +41,10 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               CupertinoSegmentedControl<Locale>(
                 children: {
-                  for (final e in widget.supportedLocales) e: Text(e.toString())
+                  for (final e in localeModel.locales) e: Text(e.toString())
                 },
-                groupValue: Localizations.localeOf(context),
-                onValueChanged: widget.onUpdateLocale,
+                groupValue: localeModel.locale,
+                onValueChanged: localeModel.setLocale,
               ),
               const Divider(),
               Text(
@@ -56,8 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     variables: {'name': 'Name', 'world': 'Flutter'}),
               ),
               Text(
-                t('home:today', variables: {'date': DateTime.now()}),
-              ),
+                  '${t('home:today')} ${DateFormat.yMEd(localeModel.locale.toString()).format(DateTime.now())}'),
               CupertinoSegmentedControl<String>(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 children: const {

@@ -1,5 +1,5 @@
 {
-  "today": "Aujourd'hui, nous sommes le {{date, dd/MM/yyyy}}",
+  "today": "Aujourd'hui, nous sommes le",
   "helloMessage": "Bienvenue {{name}} dans le monde de {{world, uppercase}}",
   "title": "Bienvenue en français FR",
   "gender": {

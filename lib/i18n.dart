@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:i18next/i18next.dart';
 
@@ -13,30 +15,28 @@ extension I18n on BuildContext {
   }) get t => I18Next.of(this)!.t;
 }
 
-// class LocaleModel with ChangeNotifier {
-//   static const List<Locale> locales = [
-//     Locale('en', 'US'),
-//     Locale('fr', 'FR'),
-//   ];
-//   late Locale _locale = _getInitialLocale();
+class LocaleModel with ChangeNotifier {
+  static const List<Locale> _locales = [
+    Locale('en', 'US'),
+    Locale('fr', 'FR'),
+  ];
+  late Locale _locale = _getInitialLocale();
 
-//   static Locale _getInitialLocale() {
-//     Locale systemLocale = PlatformDispatcher.instance.locale;
+  static Locale _getInitialLocale() {
+    Locale systemLocale = PlatformDispatcher.instance.locale;
 
-//     if (locales.contains(systemLocale)) {
-//       return systemLocale;
-//     } else {
-//       return const Locale('en', 'US');
-//     }
-//   }
+    if (_locales.contains(systemLocale)) {
+      return systemLocale;
+    } else {
+      return const Locale('en', 'US');
+    }
+  }
 
-//   Locale get locale => _locale;
+  Locale get locale => _locale;
+  List<Locale> get locales => _locales;
 
-//   void setLocale(Locale locale) {
-//     _locale = locale;
-//     ApiService.setHeaders({
-//       'x-custom-lang': locale.languageCode,
-//     });
-//     notifyListeners();
-//   }
-// }
+  void setLocale(Locale locale) {
+    _locale = locale;
+    notifyListeners();
+  }
+}

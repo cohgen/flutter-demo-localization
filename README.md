@@ -34,7 +34,7 @@ Clean all comments
 
 - Install i18next
 
-Run these flutter commands in the root of the project,  `localization_demo` folder:
+Run these flutter commands in the root of the project:
 
 ````
 flutter pub add flutter_localizations --sdk=flutter
@@ -79,7 +79,7 @@ flutter:
   # - other languages
 ```
 
-### 3.2 Start coding
+### 3.2 Start coding (version 0.1.0)
 
 - move Home widget in a separate file called `home.dart`
 
@@ -110,3 +110,25 @@ extension I18n on BuildContext {
 ```
 
 - change `home.dart` 
+
+## 4. Locale detection at startup and global availability of locales (version 0.2.0)
+
+### 4.1 Install `provider`
+
+Run this flutter command in the root of the project:
+
+````
+flutter pub add provider
+````
+
+### 4.2 Change code
+
+- In `i18n.dart`, define the LocaleModel class that will handle all locale related stuff
+
+- In `main.dart`, alter the code to provide LocaleModel and consume it.
+
+- In `home.dart`, simplify the code
+
+- Fix error with datetime formatter, which does not work well with json, due to HTML-encoding of '/' character to '&#x2F;'
+  Tip: in general, prefer doing the string formatting before calling translation
+
