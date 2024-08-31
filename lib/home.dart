@@ -5,7 +5,9 @@ import 'package:localization_demo/i18n.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  const MyHomePage({super.key, this.localeParam});
+
+  final String? localeParam;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -23,6 +25,14 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final t = context.t;
     final localeModel = Provider.of<LocaleModel>(context, listen: false);
+    if (widget.localeParam != null &&
+        localeModel.locale.toString() != widget.localeParam) {
+      print('heyyy ${widget.localeParam}');
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        localeModel.setLocale(Locale(widget.localeParam!));
+      });
+      print('localeModel.locale: ${localeModel.locale}');
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -71,6 +81,18 @@ class _MyHomePageState extends State<MyHomePage> {
               TextButton(
                 onPressed: resetCounter,
                 child: Text(t('counter:resetCounter')),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  // final locale = Localizations.localeOf(context).languageCode;
+                  // final routeManager = await RouteManager.loadRoutesConfig();
+                  // final route = routeManager.getRoute('home', locale);
+                  // context.go(route);
+                },
+                child: Text(t('home:action.goAbout')),
               ),
             ],
           ),

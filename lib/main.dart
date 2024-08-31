@@ -1,11 +1,18 @@
+import 'package:flutter_web_plugins/url_strategy.dart' show usePathUrlStrategy;
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:i18next/i18next.dart';
+// import 'package:localization_demo/about.dart';
 import 'package:localization_demo/home.dart';
 import 'package:localization_demo/i18n.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (kIsWeb) usePathUrlStrategy();
   runApp(const MyApp());
 }
 
@@ -23,7 +30,7 @@ class _MyAppState extends State<MyApp> {
     return ChangeNotifierProvider<LocaleModel>(
       create: (_) => LocaleModel(),
       child: Consumer<LocaleModel>(builder: (context, localeModel, child) {
-        return MaterialApp(
+        return MaterialApp.router(
           title: 'Internationalization Demo',
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -42,9 +49,9 @@ class _MyAppState extends State<MyApp> {
               options: I18NextOptions(formats: formatters(localeModel.locale)),
             ),
           ],
-          home: const MyHomePage(),
           locale: localeModel.locale,
           supportedLocales: localeModel.locales,
+          routerConfig: createRouter(localeModel.locale, context),
         );
       }),
     );
@@ -57,5 +64,40 @@ class _MyAppState extends State<MyApp> {
       'lowercase': (value, format, locale, options) =>
           value?.toString().toLowerCase(),
     };
+  }
+
+  GoRouter createRouter(Locale locale, BuildContext context) {
+    return GoRouter(
+      debugLogDiagnostics: false,
+      routes: [
+        GoRoute(
+          path: '/',
+          redirect: (BuildContext context, GoRouterState state) {
+            return '/${locale.toString()}';
+          },
+        ),
+        GoRoute(
+          path: '/:locale',
+          builder: (context, state) {
+            if (state.pathParameters['locale'] == null ||
+                state.pathParameters['locale']!.isEmpty) {
+              print('zdazd');
+              return const MyHomePage();
+            } else {
+              print('hzz');
+              return MyHomePage(localeParam: state.pathParameters['locale']);
+            }
+          },
+        ),
+        // GoRoute(
+        //   path: '/:locale/${t('routes:home')}',
+        //   builder: (context, state) => const MyHomePage(),
+        // ),
+        // GoRoute(
+        //   path: '/:locale/${t('routes:about')}',
+        //   builder: (context, state) => const AboutPage(),
+        // ),
+      ],
+    );
   }
 }

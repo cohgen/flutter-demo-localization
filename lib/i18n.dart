@@ -28,7 +28,7 @@ class LocaleModel with ChangeNotifier {
     if (_locales.contains(systemLocale)) {
       return systemLocale;
     } else {
-      return const Locale('en', 'US');
+      return _locales.first;
     }
   }
 
@@ -36,7 +36,13 @@ class LocaleModel with ChangeNotifier {
   List<Locale> get locales => _locales;
 
   void setLocale(Locale locale) {
-    _locale = locale;
+    print('setLocale: ${locale.toString()}');
+    if (_locales.contains(locale)) {
+      _locale = locale;
+    } else {
+      print('locale does not exist, fallback to en-US');
+      _locale = _locales.first;
+    }
     notifyListeners();
   }
 }

@@ -132,3 +132,13 @@ flutter pub add provider
 - Fix error with datetime formatter, which does not work well with json, due to HTML-encoding of '/' character to '&#x2F;'
   Tip: in general, prefer doing the string formatting before calling translation
 
+## 5. Add routing with go_router (version 0.3.0)
+
+### 5.1 Install go_router
+
+Run this flutter command in the root of the project:
+
+````
+flutter pub add go_router
+````
+

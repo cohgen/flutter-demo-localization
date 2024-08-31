@@ -1,10 +1,13 @@
 {
+  "title": "Bienvenue en français FR",
   "today": "Aujourd'hui, nous sommes le",
   "helloMessage": "Bienvenue {{name}} dans le monde de {{world, uppercase}}",
-  "title": "Bienvenue en français FR",
   "gender": {
     "message": "Ils",
     "message_female": "Elle",
     "message_male": "Il"
+  },
+  "action": {
+    "goAbout": "Aller à la page d'à-propos"
   }
 }
